@@ -1,0 +1,42 @@
+.container {
+  /* display: flex; */
+  @apply flex;
+}
+
+.menu {
+  /* flex: 1; */
+  @apply flex-1 p-5;
+  background-color: var(--bgSoft);
+}
+
+.content {
+  @apply p-5;
+  flex: 4;
+}
+
+.wrapper {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+
+}
+
+.main {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+
+}
+
+.side {
+  flex: 1;
+
+}
