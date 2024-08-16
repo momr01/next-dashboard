@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true } //createdat
 );
 
 const productSchema = new mongoose.Schema(
@@ -73,6 +73,6 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const User = mongoose.models.User || mongoose.model("User", userSchema);
+export const User = mongoose.models.User || mongoose.model("User", userSchema); //to not create a new one
 export const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);
