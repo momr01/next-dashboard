@@ -2,6 +2,7 @@
 // import { fetchUsers } from "@/app/lib/data";
 // import Pagination from "@/app/ui/dashboard/pagination/pagination";
 // import Search from "@/app/ui/dashboard/search/search";
+import { deleteUser } from "@/app/lib/actions";
 import { fetchUsers } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
@@ -9,38 +10,37 @@ import styles from "@/app/ui/dashboard/users/users.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const UsersPage = async () =>
-  // { searchParams }
-  {
-    // const q = searchParams?.q || "";
-    // const page = searchParams?.page || 1;
-    //const { count, users } = await fetchUsers(q, page);
+interface SearchParams {
+  q?: string;
+  page?: number;
+}
 
-    const { count, users } = await fetchUsers();
+const UsersPage = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+  const { count, users } = await fetchUsers(q, page);
 
-    console.log(users);
-
-    return (
-      <div className={styles.container}>
-        <div className={styles.top}>
-          <Search placeholder="Search for a user..." />
-          <Link href="/dashboard/users/add">
-            <button className={styles.addButton}>Add New</button>
-          </Link>
-        </div>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <td>Name</td>
-              <td>Email</td>
-              <td>Created At</td>
-              <td>Role</td>
-              <td>Status</td>
-              <td>Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
+  return (
+    <div className={styles.container}>
+      <div className={styles.top}>
+        <Search placeholder="Search for a user..." />
+        <Link href="/dashboard/users/add">
+          <button className={styles.addButton}>Add New</button>
+        </Link>
+      </div>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Created At</td>
+            <td>Role</td>
+            <td>Status</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
             <tr key={user.id}>
               <td>
                 <div className={styles.user}>
@@ -65,10 +65,8 @@ const UsersPage = async () =>
                       View
                     </button>
                   </Link>
-                  <form 
-                  //action={deleteUser}
-                  >
-                    <input type="hidden" name="id" value={(user.id)} />
+                  <form action={deleteUser}>
+                    <input type="hidden" name="id" value={user.id} />
                     <button className={`${styles.button} ${styles.delete}`}>
                       Delete
                     </button>
@@ -77,14 +75,11 @@ const UsersPage = async () =>
               </td>
             </tr>
           ))}
-
-          
-          </tbody>
-        </table>
-        {/* <Pagination count={count} /> */}
-        <Pagination />
-      </div>
-    );
-  };
+        </tbody>
+      </table>
+      <Pagination count={count} />
+    </div>
+  );
+};
 
 export default UsersPage;

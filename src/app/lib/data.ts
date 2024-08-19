@@ -18,40 +18,22 @@ interface FetchUsersResponse {
   users: UserDocument[];
 }
 
-// export const fetchUsers = async (
-//   q: string,
-//   page: number
-// ): Promise<FetchUsersResponse> => {
-//   const regex = new RegExp(q, "i");
-
-//   const ITEM_PER_PAGE = 2;
-
-//   try {
-//     connectToDB();
-//     const count = await User.find({
-//       username: { $regex: regex },
-//     }).countDocuments();
-//     const users = await User.find({ username: { $regex: regex } })
-//       .limit(ITEM_PER_PAGE)
-//       .skip(ITEM_PER_PAGE * (page - 1));
-//     return { count, users };
-//   } catch (err) {
-//     console.log(err);
-//     throw new Error("Failed to fetch users!");
-//   }
-// };
-
-export const fetchUsers = async (): Promise<FetchUsersResponse> => {
-  //const regex = new RegExp(q, "i");
+export const fetchUsers = async (
+  q: string,
+  page: number
+): Promise<FetchUsersResponse> => {
+  const regex = new RegExp(q, "i"); // case insensitive
 
   const ITEM_PER_PAGE = 2;
 
   try {
     connectToDB();
-    const count = await User.find().countDocuments();
-    const users = await User.find();
-    //.limit(ITEM_PER_PAGE)
-    //.skip(ITEM_PER_PAGE * (page - 1))
+    const count = await User.find({
+      username: { $regex: regex },
+    }).countDocuments();
+    const users = await User.find({ username: { $regex: regex } })
+      .limit(ITEM_PER_PAGE)
+      .skip(ITEM_PER_PAGE * (page - 1)); //que saltee los dos items anteriores
     return { count, users };
   } catch (err) {
     console.log(err);
@@ -73,6 +55,12 @@ export const fetchUser = async (id: string) => {
 
 interface ProductDocument extends Document {
   title: string;
+  id: string;
+  img: string;
+  desc: string;
+  price: number;
+  createdAt: Date;
+  stock: number;
 }
 
 interface FetchProductsResponse {

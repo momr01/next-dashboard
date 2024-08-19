@@ -3,19 +3,22 @@
 import { MdSearch } from "react-icons/md";
 import styles from "./search.module.css";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-//import { useDebouncedCallback } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
+import { ChangeEvent } from "react";
 
 const Search = ({ placeholder } : Readonly<{
     placeholder: string;
   }>) => {
-  /*const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const handleSearch = useDebouncedCallback((e) => {
+  const handleSearch = 
+  useDebouncedCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("page", 1);
+    params.set("page", "1");
 
     if (e.target.value) {
       e.target.value.length > 2 && params.set("q", e.target.value);
@@ -23,7 +26,8 @@ const Search = ({ placeholder } : Readonly<{
       params.delete("q");
     }
     replace(`${pathname}?${params}`);
-  }, 300);*/
+  }
+  , 300);
 
   return (
     <div className={styles.container}>
@@ -32,7 +36,7 @@ const Search = ({ placeholder } : Readonly<{
         type="text"
         placeholder={placeholder}
         className={styles.input}
-        //onChange={handleSearch}
+        onChange={handleSearch}
       />
     </div>
   );
