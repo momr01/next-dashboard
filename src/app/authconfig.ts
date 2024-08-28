@@ -1,4 +1,5 @@
 export const authConfig = {
+  site: process.env.AUTH_URL,
   providers:[],
   pages: {
     signIn: "/login",
