@@ -13,9 +13,9 @@ declare module "next-auth" {
   interface Session {
     user: {
       /** The user's postal address. */
-      username: string,
-      img: string
-    } & DefaultSession["user"]
+      username: string;
+      img: string;
+    } & DefaultSession["user"];
   }
 }
 
@@ -40,6 +40,8 @@ const login = async (credentials: any) => {
   }
 };
 
+const secret = "hummmmm";
+
 export const { signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
@@ -54,8 +56,9 @@ export const { signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  secret: process.env.NEXT_PUBLIC_SECRET,
-  
+  //secret: process.env.NEXT_PUBLIC_SECRET,
+  secret,
+
   // ADD ADDITIONAL INFORMATION TO SESSION
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: any }) {
